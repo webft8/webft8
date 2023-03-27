@@ -129,7 +129,7 @@ mk_test_data: tools
 	$(BASE_OUT_DIR)/tools/bin2c ./ft8_lib/test/wav/websdr_test6.wav $(BASE_OUT_DIR)/tools/websdr_test6.wav.h websdr_test6_wav
 
 test_telemetry:
-	./test_telemetry.sh
+	CC='$(CC) -std=gnu11 -D_POSIX_C_SOURCE=199309L' ./test_telemetry.sh
 
 submodule_update:
 	git submodule update --init --recursive
