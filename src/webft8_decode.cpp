@@ -46,13 +46,13 @@ int webft8_load_wav_from_buffer(float* signal, int* num_samples, int* sample_rat
 {
     //printf("DUMPING NON-ZERO WAV DATA, bytes %i:\n", wav_data_size);
     //for(int i=0; i<wav_data_size; i++) {
-    printf("DUMPING min(wav_data_size, 50) NON-ZERO WAV DATA, bytes %i:\n", wav_data_size);    
-    for(int i=0; i<WEBFT8_MIN(wav_data_size, 50); i++) {
-        if(wav_data[i] != 0) {
-            printf(" %d, ", wav_data[i]);
-        }
-    }
-    printf("\n");
+    //printf("DUMPING min(wav_data_size, 50) NON-ZERO WAV DATA, bytes %i:\n", wav_data_size);    
+    //for(int i=0; i<WEBFT8_MIN(wav_data_size, 50); i++) {
+    //    if(wav_data[i] != 0) {
+    //        printf(" %d, ", wav_data[i]);
+    //    }
+    //}
+    //printf("\n");
     
     char subChunk1ID[4];    // = {'f', 'm', 't', ' '};
     uint32_t subChunk1Size; // = 16;    // 16 for PCM
@@ -105,9 +105,9 @@ int webft8_load_wav_from_buffer(float* signal, int* num_samples, int* sample_rat
     memcpy((void*)&audioFormat, wav_data+pos, sizeof(audioFormat));
     pos += sizeof(audioFormat); // 1 = pcm, int16_t; 3 = IEEE float
     if(audioFormat == 1) {
-        printf("AUDIO FORMAT: %i int16!\n  ", (int)audioFormat);
+        //printf("AUDIO FORMAT: %i int16!\n  ", (int)audioFormat);
     } else if(audioFormat == 3) {
-        printf("AUDIO FORMAT: %i - float32\n  ", (int)audioFormat);
+        //printf("AUDIO FORMAT: %i - float32\n  ", (int)audioFormat);
     } else {
         printf("INVALID AUDIO FORMAT: %i - not int16 nor float32!\n  ", (int)audioFormat);
         return -2;
@@ -182,7 +182,7 @@ int webft8_load_wav_from_buffer(float* signal, int* num_samples, int* sample_rat
         free(raw_data);
     }
 
-    printf("load_wav complete. format=%i\n", audioFormat);
+    //printf("load_wav complete. format=%i\n", audioFormat);
     return 0;
     
 }
@@ -393,7 +393,7 @@ std::string decode(const monitor_t* mon, struct tm* tm_slot_start)
     LOG(LOG_INFO, "Decoded %d messages, callsign hashtable size %d\n", num_decoded, callsign_hashtable_size);
     hashtable_cleanup(10);
     ret += " ], \"error\": null }";
-    printf(" RETURN: %s\n", ret.c_str());
+    //printf(" RETURN: %s\n", ret.c_str());
     return ret;
 }
 
@@ -403,16 +403,16 @@ std::string decode(const monitor_t* mon, struct tm* tm_slot_start)
 #define MAX_STATIC_NUM_SAMPLES (MAX_PROTO_SECONDS * MAX_SAMPLE_RATE)
 
 char* webft8_ft8_decode(uint8_t* wav_data, int size) {
-    printf("Will load wave now %p, size=%i!\n", wav_data, (int)size); fflush(stdout);
+    //printf("Will load wave now %p, size=%i!\n", wav_data, (int)size); fflush(stdout);
     LOG(LOG_DEBUG, "webft8_ft8_decode\n");
     //monitor_process(NULL, NULL);
     ftx_protocol_t protocol = FTX_PROTOCOL_FT8;
     int sample_rate = MAX_SAMPLE_RATE;
     int num_samples = MAX_STATIC_NUM_SAMPLES; //slot_period * sample_rate;
-    printf("Allocating %i bytes space for float32 samples... \n", (int)(MAX_STATIC_NUM_SAMPLES * sizeof(float))); fflush(stdout);
+    //printf("Allocating %i bytes space for float32 samples... \n", (int)(MAX_STATIC_NUM_SAMPLES * sizeof(float))); fflush(stdout);
     float* signal = (float*)malloc(MAX_STATIC_NUM_SAMPLES * sizeof(float));
     bool is_live = false;
-    printf("Done, Will load wave now!\n"); fflush(stdout);
+    //printf("Done, Will load wave now!\n"); fflush(stdout);
     int rc = webft8_load_wav_from_buffer(signal, &num_samples, &sample_rate, wav_data, size);
     if (rc < 0){
         LOG(LOG_ERROR, "ERROR: cannot load wave data of size %i\n", size); fflush(stdout);
@@ -456,7 +456,7 @@ char* webft8_ft8_decode(uint8_t* wav_data, int size) {
     char* response = (char*) malloc(json_ret.length()+1);
     response[json_ret.length()] = '\0';
     strcpy(response, json_ret.c_str());
-    printf("Free(signal %p)\n", signal); fflush(stdout);
+    //printf("Free(signal %p)\n", signal); fflush(stdout);
     free(signal);
     return response;
 }

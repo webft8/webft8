@@ -42,13 +42,13 @@ std::vector<std::string> all_test_files() {
 }
 
 bool process_file(std::string fpath) {
-    printf("Reading %s\n", fpath.c_str());
+    //printf("Reading %s\n", fpath.c_str());
     std::string fdata = read_whole_file(fpath);
-    printf(" -> read size: %i\n", (int)fdata.length());
+    //printf(" -> read size: %i\n", (int)fdata.length());
     uint8_t* data = (uint8_t*)fdata.data();
     int len = fdata.length();
     char* ret = webft8_ft8_decode(data, len);
-    printf("process_file() => %s\n", ret);
+    printf("%s\n", ret);
     if(!ret) {
         return false;
     }
