@@ -5,3 +5,5 @@ Live demo: https://webft8.github.io/
 Credits: FT8 decoder/encoder implementation: https://github.com/kgoba/ft8_lib
 
 Tested with Google Chrome.
+
+![Screenshot](/web/webft8.github.io.jpeg?raw=true "Screenshot")
