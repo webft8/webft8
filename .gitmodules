@@ -1,0 +1,3 @@
+[submodule "src/ft8_lib"]
+	path = src/ft8_lib
+	url = https://github.com/webft8/ft8_lib.git

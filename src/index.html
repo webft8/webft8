@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title>WebFT8 Minimal Demo</title>
+</head>
+<body>
+<h1>WebFT8 Minimal Demo</h1>
+
+<h2>Open Chrome development tools (F12) and console, then press button:</h2>
+<h3 id="loading" style="visibility: visible;">Loading...</h3>
+<h3 id="loaded" style="visibility: hidden;">Loaded</h3>
+<button id="btnclick_RUN" disabled>START</button>	
+<button id="btnclick_DEBUG" disabled>ENABLE DEBUG</button>	
+<pre id="decoded">
+</pre>
+
+<script type='module'> 
+console.log("Loading JS API module...");
+const webft8_ft8_decode = await import('./webft8_ft8_decode.js');
+console.log("Loaded.");
+const test_data = await import('./test_data.js');
+
+
+function process_ft8() {
+    try {
+        console.log("btnclick_RUN: ");
+        var byteArray = test_data.waveUint8Arr; //new Uint8Array([ 1, 2, 3, 4, 5, 6, 7 ,8 ,  9, 10, 0, 11])
+        //console.log(byteArray);
+        var conf = {
+            format: "wav",
+        };
+        var ret = webft8_ft8_decode.webft8_ft8_decode(conf, byteArray);
+        console.log("RET: " + JSON.stringify(ret, null, 3));
+        document.querySelector('#decoded').textContent = JSON.stringify(ret, null, 3);
+    } catch(error) {
+        console.log("failed: " + error + ", stack:\n" + error.stack);
+    }
+}
+
+function btnclick_RUN() {
+    process_ft8();
+}
+
+function run_main() {
+    document.querySelector('#btnclick_DEBUG').addEventListener('click', btnclick_DEBUG_OUTPUT);
+    document.querySelector('#btnclick_DEBUG').disabled = false;
+    document.querySelector('#btnclick_RUN').addEventListener('click', btnclick_RUN)
+    document.querySelector('#btnclick_RUN').disabled = false;
+    document.querySelector('#loading').style.visibility = "hidden";
+    document.querySelector('#loaded').style.visibility = "visible";
+}
+
+function btnclick_DEBUG_OUTPUT() {
+    webft8_ft8_decode.enable_console_stdio();
+    console.log("Debug output to console enabled.");
+}
+
+
+if(document.readyState !== 'loading' ) {
+    run_main();
+} else {
+    document.addEventListener("DOMContentLoaded", function() {
+        run_main();
+    });
+}
+</script>
+</body>
+</html>

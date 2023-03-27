@@ -1,0 +1,7 @@
+*.cpp
+*.c
+*.h
+*.hpp
+ft8_lib/
+webft8/
+.DS_Store

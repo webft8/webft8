@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WebFT8</title>
+    <meta charset="UTF-8"/>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"/>
+  </head>
+  <body>
+    <div id="await_click_placeholder" style="display: normal;">
+      <h3 class="text-2xl text-bold text-green-500" id="click-to-start">Click anywhere to start!</h3>
+    </div>
+    <div id="app" style="display: none;"">
+      <style>
+        canvas {
+          display: block;
+          height: 80px;
+          border: 1px solid rgb(156 163 175 / var(--tw-border-opacity));
+          border-radius: 6px;
+          margin: 1em 0;
+          width: 100%;
+        }
+      </style>
+      <h1>WebFT8</h1>
+      
+      <div id="recording">
+        <div id="status">
+          <span id="state">WAITING_FOR_CLICK</span>&nbsp;
+          <span id="wall_clock"></span>
+          <span>, recording audio: <span id="data-len">0</span>/15.0 [sec]</span>&nbsp;
+          Decoded during last slot: <span id="decoded_messages_count">n/a</span>&nbsp;
+          Last slot processing time: <span id="decoded_messages_processing_time">n/a</span> [ms]&nbsp;
+          Total decoded: <span id="decoded_messages_total_count">0</span>&nbsp;
+
+        </div>
+               <canvas style="border: 1px solid black;" id="recording-canvas"></canvas>
+      </div>
+      <table id="webft8_messages" style="border: 1px dotted black;"">
+        <tr>
+          <th>Time</th>
+          <th>SNR</th>
+          <th>Message</th>
+          <th>Slot [Hz]</th>
+        </tr>
+      </table>
+      <pre id="decoded"></pre>
+  </div>
+
+<script type="module" src="./js/recorder.js"></script>
+  </body>
+</html>
