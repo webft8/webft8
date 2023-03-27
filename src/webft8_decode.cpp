@@ -20,6 +20,7 @@
 #include <ft8/debug.h>
 
 #include <string>
+#include <stdexcept>
 
 const int kMin_score = 10; // Minimum sync score threshold for candidates
 const int kMax_candidates = 140;

@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <string>
+#include <stdexcept>
 
 WebFt8Tones pack2tones(const char* message) {
     static_assert(WEBFT8_FT8_TONES_NN == FT8_NN);
