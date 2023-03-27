@@ -56,11 +56,13 @@ cli:
 	rm -rf $(BASE_OUT_DIR)/cli/
 	mkdir -p $(BASE_OUT_DIR)/cli/
 	cd $(BASE_OUT_DIR)/cli/ && \
-		$(CC) $(DEBUG_FLAGS) $(OPT_LEVEL)  -I../../ft8_lib/ \
-		 -c -Wfatal-errors -Wall -Wno-unused-variable -Wno-unused-function \
+		$(CC)  $(DEBUG_FLAGS) $(OPT_LEVEL)  -I../../ft8_lib/ \
+		 -c -Wall -Wno-unused-variable -Wno-unused-function \
 		$(LIB_FT8_DEPS_NATIVE)
-	$(CXX) $(DEBUG_FLAGS) $(OPT_LEVEL) -std=c++17 -I./ft8_lib/ webft8.cpp webft8_decode.cpp webft8_encode.cpp \
+	$(CXX) $(DEBUG_FLAGS) $(OPT_LEVEL) -std=c++17 -D_POSIX_C_SOURCE=199309L -I./ft8_lib/ webft8.cpp webft8_decode.cpp webft8_encode.cpp \
 		-Wfatal-errors -Wall -Wno-unused-variable -Wno-unused-function -O0 -g $(BASE_OUT_DIR)/cli/*.o -o $(BASE_OUT_DIR)/cli/webft8_cli
+
+# -std=gnu11 -D_POSIX_C_SOURCE=199309L
 
 cli_valgrind:
 ifndef HAS_VALGRIND
