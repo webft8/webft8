@@ -26,7 +26,7 @@ NATIVE_FILES=webft8_js.cpp \
 TOTAL_MEM = 128MB
 TOTAL_STACK = 64MB
  
-DEF_WARN_FLAGS= -Wfatal-errors -Werror -Wall -Wno-unused-function -Wno-unused-variable -Wno-unused-const-variable
+DEF_WARN_FLAGS= -Wfatal-errors -Wall -Wno-unused-function -Wno-unused-variable -Wno-unused-const-variable
 
 HAS_VALGRIND := $(shell command -v valgrind 2> /dev/null)
 
@@ -131,3 +131,9 @@ mk_test_data: tools
 
 test_telemetry:
 	./test_telemetry.sh
+
+submodule_update:
+	git submodule update --init --recursive
+
+submodule_update_to_tip:
+	git submodule update --recursive --remote

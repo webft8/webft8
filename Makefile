@@ -20,3 +20,9 @@ wasm:
 .PHONY: web
 web:
 	cd web && python3 server.py
+
+submodule_update:
+	git submodule update --init --recursive
+
+submodule_update_to_tip:
+	git submodule update --recursive --remote
