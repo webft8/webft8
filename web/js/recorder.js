@@ -84,6 +84,7 @@ async function init() {
   webft8.start({
     recorder_is_running_fn: () => { return isRecordingFn(); },
     recorder_start_fn: (recording_time) => {
+      console.log('recorder_start_fn');
       if(isRecordingFn()) {
         console.error("Attempted to start recording while system was recording!");
         return;

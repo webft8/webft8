@@ -2,7 +2,7 @@ import * as webft8_ft8_decode from './webft8_ft8_decode.js'
 import * as test_data from './test_data.js'
 import * as fs from 'fs'
 
-console.log(webft8_ft8_decode);
+//console.log(webft8_ft8_decode);
 
 try {
     //var byteArray = test_data.waveUint8Arr; //new Uint8Array([ 1, 2, 3, 4, 5, 6, 7 ,8 ,  9, 10, 0, 11])

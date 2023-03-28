@@ -6,7 +6,9 @@ Rafal Rozestwinski (callsign: SO2A, https://rozestwinski.com), project home: htt
 
 Based on an excellent: https://github.com/kgoba/ft8_lib
 
-Tested with Google Chrome and on iPhone.
+Tested with Google Chrome, Safari and on an iPhone.
+
+Firefox: supported starts with version 113, gated by https://bugzilla.mozilla.org/show_bug.cgi?id=1540913
 
 ![Screenshot](/web/webft8.github.io.jpeg?raw=true "Screenshot")
 
