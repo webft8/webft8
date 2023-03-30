@@ -1,3 +1,5 @@
+// in reality, it's loaded for a second time in a web worker. 
+// But this time, already from browser cache, hence it works stable.
 import webft8_ft8_decode_js from './webft8_ft8_decode_js.js';
 
 var _debug = true;
@@ -6,8 +8,10 @@ export function enable_console_stdio() {
         _debug = true;
 }
 
-export function init(debug) {
-        
+export async function init(debug) {
+        console.log('webft8_decode init');
+        await new Promise(r => setTimeout(r, 200)); // 200ms sleep; fixes random race conditions on Safari WASM loader.
+        console.log('webft8_decode init - done!');
 }
 
 var webft8_ft8_decode_wasm_module = await webft8_ft8_decode_js({

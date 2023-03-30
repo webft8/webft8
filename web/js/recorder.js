@@ -28,6 +28,10 @@ function setIsRecordingFalseFn() {
   isRecording = false;
 }
 
+document.querySelector('#loading_placeholder').remove();
+document.querySelector('#click-to-start').style.display = 'block';
+document.querySelector('#await_click_placeholder').style.display = 'block';
+
 // Wait for user interaction to initialize audio, as per specification.
 document.addEventListener('click', (element) => {
   init();
@@ -44,7 +48,7 @@ async function init() {
     await context.resume();
   }
 
-  document.querySelector('#state').innerHTML = 'AWAITING_DECODE_TIME';
+  document.querySelector('#state').innerHTML = 'WAITING';
 
   // Get user's microphone and connect it to the AudioContext.
   const micStream = await navigator.mediaDevices.getUserMedia({
@@ -85,6 +89,7 @@ async function init() {
     recorder_is_running_fn: () => { return isRecordingFn(); },
     recorder_start_fn: (recording_time) => {
       console.log('recorder_start_fn');
+      document.querySelector('#state').innerHTML = isRecording ? 'RECORDING' : 'WAITING';
       if(isRecordingFn()) {
         console.error("Attempted to start recording while system was recording!");
         return;
@@ -148,6 +153,7 @@ function handleRecording(processorPort, recordingProperties) {
     if (event.data.message === 'SHARE_RECORDING_BUFFER') {
       console.log("SHARE_RECORDING_BUFFER");
       setIsRecordingFalseFn();
+      document.querySelector('#state').innerHTML = isRecording ? 'RECORDING' : 'PROCESSING';
       const recordingBuffer = context.createBuffer(
           recordingProperties.numberOfChannels,
           recordingLength,
@@ -232,7 +238,7 @@ function setupRecordingGainVis() {
   let currentX = 0;
 
   function draw(currentSampleGain) {
-    const compensatedCurrentSampleGain = currentSampleGain * 30;
+    const compensatedCurrentSampleGain = currentSampleGain * 160;
     const centerY = ((1 - compensatedCurrentSampleGain) * height) / 2;
     const gainHeight = compensatedCurrentSampleGain * height;
 

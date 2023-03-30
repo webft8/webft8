@@ -1,5 +1,8 @@
+import * as webft8_ft8_decode  from "../webft8/webft8_ft8_decode.js";
+
 var webft8_worker = null;
 
+await webft8_ft8_decode.init();
 
 export const decode_ft8_audio_frame_async = (config_json, int8arr) => new Promise((res, rej) => {
 	const channel = new MessageChannel(); 

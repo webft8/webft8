@@ -52,72 +52,79 @@ class RecordingProcessor extends AudioWorkletProcessor {
     }
   
     process(inputs, outputs, params) {
-      for (let input = 0; input < 1; input++) {
-        for (let channel = 0; channel < this.numberOfChannels; channel++) {
-          for (let sample = 0; sample < inputs[input][channel].length; sample++) {
-            const currentSample = inputs[input][channel][sample];
-  
-            // Copy data to recording buffer.
-            if (this.isRecording) {
-              this._recordingBuffer[channel][sample+this.recordedFrames] =
-                  currentSample;
+      try {
+        for (let input = 0; input < 1; input++) {
+          for (let channel = 0; channel < this.numberOfChannels; channel++) {
+            for (let sample = 0; sample < inputs[input][channel].length; sample++) {
+              const currentSample = inputs[input][channel][sample];
+    
+              // Copy data to recording buffer.
+              if (this.isRecording) {
+                this._recordingBuffer[channel][sample+this.recordedFrames] =
+                    currentSample;
+              }
+    
+              // Pass data directly to output, unchanged.
+              outputs[input][channel][sample] = currentSample;
+    
+              // Sum values for visualizer
+              this.sampleSum += currentSample;
             }
-  
-            // Pass data directly to output, unchanged.
-            outputs[input][channel][sample] = currentSample;
-  
-            // Sum values for visualizer
-            this.sampleSum += currentSample;
           }
         }
-      }
-  
-      const shouldPublish = this.framesSinceLastPublish >= this.publishInterval;
+    
+        const shouldPublish = this.framesSinceLastPublish >= this.publishInterval;
 
-      // Validate that recording hasn't reached its limit.
-      if (this.isRecording) {
-        if (this.recordedFrames + 128 < this.maxRecordingFrames) {
-          this.recordedFrames += 128;
-  
-          // Post a recording recording length update on the clock's schedule
-          if (shouldPublish) {
+        // Validate that recording hasn't reached its limit.
+        if (this.isRecording) {
+          if (this.recordedFrames + 128 < this.maxRecordingFrames) {
+            this.recordedFrames += 128;
+    
+            // Post a recording recording length update on the clock's schedule
+            if (shouldPublish) {
+              this.port.postMessage({
+                message: 'UPDATE_RECORDING_LENGTH',
+                recordingLength: this.recordedFrames,
+              });
+            }
+          } else {
+            // Let the rest of the app know the limit was reached.
+            this.isRecording = false;
+
             this.port.postMessage({
-              message: 'UPDATE_RECORDING_LENGTH',
-              recordingLength: this.recordedFrames,
+              message: 'MAX_RECORDING_LENGTH_REACHED',
             });
+            this.port.postMessage({
+              message: 'SHARE_RECORDING_BUFFER',
+              buffer: this._recordingBuffer,
+            });
+            this.recordedFrames = 0;
+            this.framesSinceLastPublish = 0;
+            this.publishInterval = this.sampleRate / 30;
+            this.sampleSum = 0;
           }
-        } else {
-          // Let the rest of the app know the limit was reached.
-          this.isRecording = false;
-
-          this.port.postMessage({
-            message: 'MAX_RECORDING_LENGTH_REACHED',
-          });
-          this.port.postMessage({
-            message: 'SHARE_RECORDING_BUFFER',
-            buffer: this._recordingBuffer,
-          });
-          this.recordedFrames = 0;
-          this.framesSinceLastPublish = 0;
-          this.publishInterval = this.sampleRate / 30;
-          this.sampleSum = 0;
         }
+        // Handle message clock.
+        // If we should publish, post message and reset clock.
+        if (shouldPublish) {
+          this.port.postMessage({
+            message: 'UPDATE_VISUALIZERS',
+            gain: this.sampleSum / this.framesSinceLastPublish,
+          });
+    
+          this.framesSinceLastPublish = 0;
+          this.sampleSum = 0;
+        } else {
+          this.framesSinceLastPublish += 128;
+        }
+    
+        return true;
+      } catch(error) {
+        console.error("Exception in recording-processor.js::process");
+        console.error(error);
+        console.error(error.stack);
+        return true;
       }
-      // Handle message clock.
-      // If we should publish, post message and reset clock.
-      if (shouldPublish) {
-        this.port.postMessage({
-          message: 'UPDATE_VISUALIZERS',
-          gain: this.sampleSum / this.framesSinceLastPublish,
-        });
-  
-        this.framesSinceLastPublish = 0;
-        this.sampleSum = 0;
-      } else {
-        this.framesSinceLastPublish += 128;
-      }
-  
-      return true;
     }
   }
   

@@ -8,46 +8,71 @@
     <meta name="description" content="">
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"/>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="await_click_placeholder" style="display: normal;">
+    <div id="loading_placeholder" style="display: normal;">
       <center>
-        <h3 class="text-2xl text-bold text-green-500" id="click-to-start">Click anywhere to start!</h3>
+        <h4>Supported browsers: Google Chrome, Safari and iPhone; (Firefox 113+)</h4>
+        <h3><a href="https://github.com/webft8/webft8">https://github.com/webft8/webft8</a></h3>
+        <h1 style="">Loading Application...</h1>
+        <div class="loader"></div>
+        <br />
         <img src="webft8.github.io.jpeg" style="width: 40%; height: 40%;" alt="logo" />
         <h3 class="text-2xl text-bold text-green-500" id="click-to-start">Click anywhere to start!</h3>
       </center>
     </div>
-    <div id="app" style="display: none;"">
+    <div id="await_click_placeholder" style="display: none;">
+      <center>
+        <h4>Supported browsers: Google Chrome, Safari and iPhone; (Firefox 113+)</h4>
+        <h3><a href="https://github.com/webft8/webft8">https://github.com/webft8/webft8</a></h3>
+        <blink><h1 class="text-2xl text-bold text-green-500; text-decoration: blink;" id="click-to-start">Click anywhere to start!</h1></blink>
+        <img src="webft8.github.io.jpeg" style="width: 40%; height: 40%;" alt="logo" />
+        <blink><h3 class="text-2xl text-bold text-green-500" id="click-to-start">Click anywhere to start!</h3></blink>
+      </center>
+    </div>
+    <div id="app" style="display: none; text-align: center;" >
       <style>
         canvas {
           display: block;
           height: 80px;
-          border: 1px solid rgb(156 163 175 / var(--tw-border-opacity));
-          border-radius: 6px;
+          border: 2px solid rgb(156 163 175 / var(--tw-border-opacity));
+          /*border-radius: 8px;*/
           margin: 1em 0;
-          width: 100%;
+          width: 50%;
         }
       </style>
-      <h1>WebFT8</h1>
+      <h1><a href="https://github.com/webft8/webft8">WebFT8</a></h1>
       
-      <div id="recording">
-        <div id="status">
-          <span id="state">WAITING_FOR_CLICK</span>&nbsp;
-          <span id="wall_clock"></span>
-          <span>, recording audio: <span id="data-len">0</span>/15.0 [sec]</span>&nbsp;
-          Decoded during last slot: <span id="decoded_messages_count">n/a</span>&nbsp;
-          Last slot processing time: <span id="decoded_messages_processing_time">n/a</span> [ms]&nbsp;
-          Total decoded: <span id="decoded_messages_total_count">0</span>&nbsp;
-
+      <div id="recording" style="margin: 0 auto;">
+        <div id="status" style="margin: 0 auto;">
+          <table class="status" style="margin: 0 auto; min-width: 50%">
+            <tr class="status">
+              <th class="status">State</th>
+              <th class="status">Clock</th>
+              <th class="status">Frame</th>
+              <th class="status">Decoded</th>
+              <th class="status">Total</th>
+              <th class="status">Processing</th>
+            </tr>
+            <tr class="status">
+              <td class="status"><span id="state">WAITING_FOR_CLICK</span></td>
+              <td class="status"><span id="wall_clock"></span></td>
+              <td class="status"><span id="data-len">0</span></td>
+              <td class="status"><span id="decoded_messages_count">n/a</span></td>
+              <td class="status"><span id="decoded_messages_total_count">0</span></td>
+              <td class="status"><span id="decoded_messages_processing_time">n/a</span> [ms]</td>
+            </tr>
+          </table>
         </div>
-               <canvas style="border: 1px solid black;" id="recording-canvas"></canvas>
+               <canvas style="margin: 0 auto; border: 1px solid black;" id="recording-canvas"></canvas>
       </div>
-      <table id="webft8_messages" style="border: 1px dotted black;"">
+      <table id="webft8_messages" class="decoded_table" style="margin: 0 auto; min-width: 50%; border: 1px solid black;">
         <tr>
-          <th>Time</th>
-          <th>SNR</th>
-          <th>Message</th>
-          <th>Slot [Hz]</th>
+          <th class="msg_header">Time</th>
+          <th class="msg_header">SNR</th>
+          <th class="msg_header">Message</th>
+          <th class="msg_header">Slot [Hz]</th>
         </tr>
       </table>
       <pre id="decoded"></pre>

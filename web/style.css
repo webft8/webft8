@@ -1,106 +1,70 @@
-html {
-  font-size: 100%;
-}
-body {
-  line-height: 1.5;
-  font-family: sans-serif;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  color:black;
-  margin:2em;
+
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite;
 }
 
-h1 {
-  text-decoration: underline red;
-  text-decoration-thickness: 3px;
-  text-underline-offset: 6px;
-  font-size: 220%;
-  font-weight: bold;
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-h2 {
-  font-weight: bold;
-  color: #005A9C;
-  font-size: 140%;
-  text-transform: uppercase;
+@keyframes blink {
+	0% {opacity: 0}
+	49%{opacity: 0}
+	50% {opacity: 1}
 }
 
-p {
-  margin: 1em 0;
-}
-
-pre {
-  padding: 0px;
-  border:0px;
-  border-radius: 0px;
-}
-
-red {
-  color: red;
-}
-
-a {
-  color: #337ab7;
-}
-p {
-  margin-top: 1rem;
-}
-a:hover {
-  color:#23527c;
-}
-a:visited {
-  color: #8d75a3;
-}
-
-#controls {
-  display: flex;
-  margin-top: 2rem;
-}
-button {
-  flex-grow: 1;
-  height: 2.5rem;
-  min-width: 2rem;
-  border: none;
-  border-radius: 0.15rem;
-  background: #ed341d;
-  margin-left: 2px;
-  box-shadow: inset 0 -0.15rem 0 rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color:#ffffff;
-  font-weight: bold;
-  font-size: 1rem;
-}
-button:hover, button:focus {
-  outline: none;
-  background: #c72d1c;
-}
-button::-moz-focus-inner {
-  border: 0;
-}
-button:active {
-  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.2);
-  line-height: 3rem;
-}
-button:disabled {
-  pointer-events: none;
-  background: lightgray;
-}
-button:first-child {
+blink{animation: blink 1s infinite;}
+tr.status {
+  font-family: monospace;
+  margin-top: 0;
+  margin-bottom: 0;
   margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+
 }
-audio {
-  display: block;
-  width: 100%;
-  margin-top: 0.2rem;
+td.status {
+  border: 1px solid rgb(165, 165, 165)  ;
+  padding: 3px;
+  background-color: rgb(231, 231, 231);
+  color: black;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  border-spacing: 0;
 }
-li {
-  list-style: none;
-  margin-bottom: 1rem;
+th.status {
+  border: 1px solid rgb(165, 165, 165)  ;
+  padding: 3px;
+  background-color: silver;
+  color: black;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;  
+  border-spacing: 0;  
 }
-#formats {
-  margin-top: 0.5rem;
-  font-size: 80%;
+table.status {
+  border: 1px solid black;
+  padding: 0px;
+  background-color: rgb(231, 231, 231);
+  color: black;
+  border-spacing: 0;  
+}
+
+.msg_header {
+  background-color: rgb(231, 231, 231);
+}
+
+.decoded_table {
+  font-family: monospace;
 }
